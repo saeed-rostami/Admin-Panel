@@ -93,6 +93,8 @@
         <main class="py-4 container">
             @yield('content')
         </main>
+
+        @include('Admin._partials')
     </div>
 </body>
 </html>

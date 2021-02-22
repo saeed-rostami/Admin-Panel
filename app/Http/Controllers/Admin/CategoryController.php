@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -19,7 +20,7 @@ class CategoryController extends Controller
         return view('Admin.Categories.edit', compact('category'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         Category::create([
             'title' => $request->title,
@@ -28,7 +29,7 @@ class CategoryController extends Controller
         return back();
     }
 
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
        $category->update([
           'title' => $request->title

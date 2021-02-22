@@ -59,7 +59,7 @@
 
                     <td>{{$article->category->title}}</td>
 
-                    <td>{{$article->published_at}}</td>
+                    <td>{{date('d-m-Y' , strtotime($article->published_at))}}</td>
 
                     @role('admin')
                     <td>
@@ -73,16 +73,27 @@
                     </td>
                     @else
                         <td>
-                            برای این بخش دسترسی ندارید
+                            <strong class="text-danger">
+                                برای این بخش دسترسی ندارید
+                            </strong>
                         </td>
                         @endrole
 
+                        @hasanyrole('writer|admin')
                     <td>
                         <a href="{{route('admin.article.edit' , $article->id)}}"
                            class="btn
                 btn-outline-info mb-2"
                         >ویرایش</a>
                     </td>
+
+                        @else
+                            <td>
+                                <strong class="text-danger">
+                                    برای این بخش دسترسی ندارید
+                                </strong>
+                            </td>
+                            @endhasanyrole
 
                 </tr>
 
@@ -92,7 +103,3 @@
         </table>
     </div>
 @endsection
-
-{{--@foreach($articles as $article)--}}
-{{--{{dump($article)}}--}}
-{{--@endforeach--}}

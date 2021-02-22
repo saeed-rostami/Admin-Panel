@@ -1,16 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
- <div>
-     <h1>ایجاد دسته بندی جدید</h1>
-     <form action="{{route('admin.category.store')}}" method="POST">
-         @csrf
-         <label>
-             <input type="text" name="title">
-         </label>
-         <button class="btn btn-success"> ایجاد</button>
-     </form>
- </div>
+    <div>
+        <h1>ایجاد دسته بندی جدید</h1>
+        @hasanyrole('writer|admin')
+        <form action="{{route('admin.category.store')}}" method="POST">
+            @csrf
+            <label>
+                <input type="text" name="title">
+            </label>
+            <button class="btn btn-success"> ایجاد</button>
+        </form>
+        @else
+
+               <strong class="text-danger">
+                   برای این بخش دسترسی ندارید
+               </strong>
+
+            @endrole
+    </div>
 
     <div>
 
@@ -35,7 +43,6 @@
                     <td>{{$category->user->name}}</td>
 
 
-
                     @role('admin')
                     <td>
                         <form action="{{route('admin.category.delete' , $category->id)}}" method="POST">
@@ -48,17 +55,27 @@
                     </td>
                     @else
                         <td>
-                            برای این بخش دسترسی ندارید
+                            <strong class="text-danger">
+                                برای این بخش دسترسی ندارید
+                            </strong>
                         </td>
                         @endrole
 
 
-                    <td>
-                        <a href="{{route('admin.category.edit' , $category->id)}}"
-                           class="btn
+                        @hasanyrole('writer|admin')
+                        <td>
+                            <a href="{{route('admin.category.edit' , $category->id)}}"
+                               class="btn
                 btn-outline-info mb-2"
-                        >ویرایش</a>
-                    </td>
+                            >ویرایش</a>
+                        </td>
+                        @else
+                            <td>
+                                <strong class="text-danger">
+                                    برای این بخش دسترسی ندارید
+                                </strong>
+                            </td>
+                            @endhasanyrole
 
                 </tr>
 

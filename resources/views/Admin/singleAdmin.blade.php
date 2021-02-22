@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>{{$user->name}}</h1>
+   <div class="d-flex justify-content-center">
+       <h1>{{$user->name}}</h1>
+       @foreach($user->roles as $role)
+           <h1 class="text-danger">({{$role->name}})</h1>
+       @endforeach
+   </div>
     <form action="{{route('admin.roleUser.store' , $user->id)}}" method="POST">
         @csrf
         @foreach($roles as $role)
@@ -11,8 +16,8 @@
         <button type="submit" class="btn btn-success">اعمال</button>
     </form>
 
-    <form action="{{route('admin.roleUser.remove' , $user->id)}}" method="POST">
+    <form action="{{route('admin.roleUser.remove' , $user->id)}}" method="POST" class="my-1">
         @csrf
-        <button type="submit" class="btn btn-danger">عذل نقش</button>
+        <button type="submit" class="btn btn-danger">حذف نقش</button>
     </form>
 @endsection

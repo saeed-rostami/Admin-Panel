@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
-use function GuzzleHttp\Promise\all;
+use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
@@ -44,7 +44,7 @@ class ArticleController extends Controller
         return view('Admin.Articles.edit', compact('article', 'categories'));
     }
 
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
         $article = new Article();
         $article->title = $request->title;
@@ -71,15 +71,14 @@ class ArticleController extends Controller
         return redirect('articles');
     }
 
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
         if ($request->image == null) {
             $image = $article->image;
         } else {
-            $img = $request->image;
-            $title = $request->title;
-            $image = $title . '.' . $img;
-            $image->move("images/", $image);
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move("images/", $name);
         }
 
         $article->update([
@@ -88,14 +87,14 @@ class ArticleController extends Controller
             'body' => $request->body,
             'status' => $request->status,
             'tag' => $request->tag,
-            'image' => $image,
+            'image' => $name,
             'user_id' => auth()->user()->id,
             'category_id' => $request->category_id,
             'published_at' => $request->published_at,
         ]);
         $article->save();
 
-        $img = Image::make(public_path('/images/' . $image))->resize('525', '295');
+        $img = Image::make(public_path('/images/' . $name))->resize('525', '295');
         $img->save();
         return redirect('articles');
 

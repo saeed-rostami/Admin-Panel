@@ -26,30 +26,30 @@ Route::get('/admin', [App\Http\Controllers\HomeController::class, 'admin'])->nam
 //categories
 Route::get('/categories', [App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('admin.categories');
 
-Route::post('/category-store', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.store');
+Route::post('/category-store', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('admin.category.store')->middleware(['role:admin|writer']);
 
-Route::get('/category-edit-show/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('admin.category.edit');
+Route::get('/category-edit-show/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])->name('admin.category.edit')->middleware(['role:admin|writer']);
 
-Route::put('/category-update/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('admin.category.update');
+Route::put('/category-update/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])->name('admin.category.update')->middleware(['role:admin|writer']);
 
 Route::delete('/category-destroy/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name
-('admin.category.delete');
+('admin.category.delete')->middleware(['role:admin|writer']);
 
 
 //articles
 Route::get('/articles', [App\Http\Controllers\Admin\ArticleController::class, 'index'])->name('admin.articles');
 Route::get('/article/{article}', [App\Http\Controllers\Admin\ArticleController::class, 'show'])->name('admin.article.show');
 
-Route::get('/article-create', [App\Http\Controllers\Admin\ArticleController::class, 'create'])->name('admin.article.create');
+Route::get('/article-create', [App\Http\Controllers\Admin\ArticleController::class, 'create'])->name('admin.article.create')->middleware(['role:admin|writer']);
 
-Route::post('/article-store', [App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store');
+Route::post('/article-store', [App\Http\Controllers\Admin\ArticleController::class, 'store'])->name('admin.article.store')->middleware(['role:admin|writer']);
 
 Route::get('/article-edit-show/{article}', [App\Http\Controllers\Admin\ArticleController::class, 'edit'])->name('admin.article.edit');
 
-Route::put('/article-update/{article}', [App\Http\Controllers\Admin\ArticleController::class, 'update'])->name('admin.article.update');
+Route::put('/article-update/{article}', [App\Http\Controllers\Admin\ArticleController::class, 'update'])->name('admin.article.update')->middleware(['role:admin|writer']);
 
 Route::delete('/article-destroy/{article}', [App\Http\Controllers\Admin\ArticleController::class, 'destroy'])->name
-('admin.article.delete');
+('admin.article.delete')->middleware(['role:admin|writer']);
 
 
 Route::group(['middleware' => ['role:admin']], function () {
