@@ -60,6 +60,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/admin-show/{user}', [App\Http\Controllers\Admin\AdminController::class, 'show'])->name('admin.show');
     Route::post('/role-user/{user}', [App\Http\Controllers\Admin\AdminController::class, 'roleUser'])->name('admin.roleUser.store');
     Route::post('/role-user-remove/{user}', [App\Http\Controllers\Admin\AdminController::class, 'removeRoleUser'])->name('admin.roleUser.remove');
+    Route::delete('/user-remove/{user}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name
+    ('admin.user.remove');
 
 //roles
     Route::get('/roles', [App\Http\Controllers\Admin\RoleController::class, 'index'])->name('admin.roles.index');

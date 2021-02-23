@@ -22,11 +22,13 @@
                 </strong>
                 <label>
                     <select name="role">
-                        <option value="All">
+                        <option value="All"
+                        >
                             همه
                         </option>
                         @foreach($roles as $role)
-                            <option value="{{$role->id}}">
+                            <option value="{{$role->id}}"
+                            >
                                 {{$role->name}}
                             </option>
                         @endforeach
@@ -72,7 +74,7 @@
                     </td>
 
                     <td>
-                        <form action="#" method="POST">
+                        <form action="{{route('admin.user.remove' , $user->id)}}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn

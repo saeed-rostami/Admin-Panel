@@ -58,7 +58,7 @@ class ArticleController extends Controller
 
         $image = $request->file('image');
         $title = $request->title;
-        $extension = $image->getClientOriginalName();
+        $extension = $image->getClientOriginalExtension();
         $fileName = $title . '.' . $extension;
         $image->move("images/", $fileName);
 

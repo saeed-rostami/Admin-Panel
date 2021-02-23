@@ -26,6 +26,7 @@
 
         <div class="d-flex justify-content-around">
             <div class="form-group">
+                دسته بندی
                 <label>
                     <select type="text" name="category_id" class="form-control">
                         @foreach($categories as $category)
@@ -39,6 +40,7 @@
 
             <div class="form-group">
                 <label>
+                    تاریخ انتشار
                     <input type="date" class="form-control" name="published_at" value="{{old('published_at' ,
                     date('Y-m-d', strtotime($article->published_at)))
                     }}">
@@ -46,6 +48,7 @@
             </div>
 
             <div class="form-group">
+                برچسب
                 <label>
                     <input type="text" class="form-control" name="tag" value="{{old('tag' ,  $article->tag)}}">
                 </label>
@@ -53,6 +56,7 @@
 
             <div class="form-group">
                 <label>
+                    نوع مقاله
                     <select type="text" class="form-control" name="status">
                         <option value="{{'Draft'}}"
                             {{ old('status', $article->status) == 'Draft' ? 'selected' : '' }}
@@ -70,6 +74,7 @@
         </div>
 
         <div class="form-group">
+            تصویر
             <label>
                 <input type="file" class="form-control" name="image">
             </label>

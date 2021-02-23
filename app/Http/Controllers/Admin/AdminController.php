@@ -43,4 +43,10 @@ class AdminController extends Controller
         return redirect('admins');
     }
 
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return back();
+    }
+
 }
