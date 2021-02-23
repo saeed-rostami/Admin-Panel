@@ -74,7 +74,7 @@ class ArticleController extends Controller
     public function update(ArticleRequest $request, Article $article)
     {
         if ($request->image == null) {
-            $image = $article->image;
+            $name = $article->image;
         } else {
             $img = $request->file('image');
             $name = $img->getClientOriginalName();

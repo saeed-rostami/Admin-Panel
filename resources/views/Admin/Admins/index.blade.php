@@ -64,17 +64,11 @@
                     <td>{{$user->email}}</td>
 
                     <td>
-                        @if(count($user->roles))
-                            @foreach($user->roles as $role)
-                                <span class="badge badge-light">
+                        @foreach($user->roles as $role)
+                            <span class="badge badge-light">
                                     {{$role->name}}
                                 </span>
-                            @endforeach
-                        @else
-                            <span class="badge badge-danger">
-                               بدون نقش
-                           </span>
-                        @endif
+                        @endforeach
                     </td>
 
                     <td>

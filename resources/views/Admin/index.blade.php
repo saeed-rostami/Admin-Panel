@@ -2,20 +2,33 @@
 
 @section('content')
     <h1 class="text-center">داشبورد</h1>
-    <nav>
-        <ul>
-            <li>
-                <a class="btn-outline-success" href="{{route('admin.categories')}}">مدیریت دسته بندی</a>
-            </li>
-            <li>
-                <a class="btn-outline-success" href="{{route('admin.articles')}}">مدیریت مقالات</a>
-            </li>
-            <li>
-                <a class="btn-outline-success" href="{{route('admin.admins')}}">مدیریت مدیران</a>
-                <span class="badge badge-danger">
-                     این بخش فقط برای مدیران ارشد قابل دسترس میباشد
-                </span>
-            </li>
-        </ul>
-    </nav>
+
+ <div class="d-flex justify-content-around animate__animated animate__fadeIn">
+     <div class="box bg-warning">
+         <a href="{{route('admin.categories')}}">مدیریت دسته بندی</a>
+     </div>
+
+     <div class="box bg-success">
+         <a href="{{route('admin.articles')}}">مدیریت مقالات</a>
+
+     </div>
+
+     <div class="box bg-info">
+         <a href="{{route('admin.admins')}}">مدیریت مدیران</a>
+     </div>
+ </div>
 @endsection
+
+<style>
+    .box{
+        height: 200px;
+        width: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box a {
+        font-size: x-large;
+        color: black;
+    }
+</style>
