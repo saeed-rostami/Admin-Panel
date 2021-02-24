@@ -49,7 +49,7 @@
                 <th scope="col">ایمیل</th>
                 <th scope="col">نقش</th>
                 <th scope="col">عملیات حذف</th>
-                <th scope="col">عملیات ویرایش</th>
+             
             </tr>
             </thead>
             <tbody>
@@ -83,12 +83,7 @@
                         </form>
                     </td>
 
-                    <td>
-                        <a href="#"
-                           class="btn
-                btn-outline-info mb-2"
-                        >ویرایش</a>
-                    </td>
+                
 
                 </tr>
 
