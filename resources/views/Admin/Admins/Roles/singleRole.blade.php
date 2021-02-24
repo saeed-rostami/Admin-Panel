@@ -5,9 +5,14 @@
     <form action="{{route('admin.permissionsRole.store' , $role->id)}}" method="POST">
         @csrf
         @foreach($permissions as $permission)
-            <input type="checkbox" id="{{$permission->id}}" name="permisssion[]" value="{{$permission->id}}">
+            <input type="checkbox" id="{{$permission->id}}" name="permisssion[]" value="{{$permission->id}}"
+            @foreach($role->permissions as $per)
+                {{ old('permisssion', $per->id) == $permission->id ? 'checked' : '' }}
+                @endforeach
+            >
             <label for="vehicle1">{{$permission->name}}</label><br>
         @endforeach
         <button type="submit" class="btn btn-success">اعمال</button>
     </form>
 @endsection
+
