@@ -61,7 +61,6 @@
 
                     <td>{{date('d-m-Y' , strtotime($article->published_at))}}</td>
 
-                    @role('admin')
                     <td>
                         <form action="{{route('admin.article.delete' , $article->id)}}" method="POST">
                             @csrf
@@ -71,15 +70,8 @@
                             </button>
                         </form>
                     </td>
-                    @else
-                        <td>
-                            <strong class="text-danger">
-                                برای این بخش دسترسی ندارید
-                            </strong>
-                        </td>
-                        @endrole
 
-                        @hasanyrole('writer|admin')
+
                     <td>
                         <a href="{{route('admin.article.edit' , $article->id)}}"
                            class="btn
@@ -87,13 +79,6 @@
                         >ویرایش</a>
                     </td>
 
-                        @else
-                            <td>
-                                <strong class="text-danger">
-                                    برای این بخش دسترسی ندارید
-                                </strong>
-                            </td>
-                            @endhasanyrole
 
                 </tr>
 

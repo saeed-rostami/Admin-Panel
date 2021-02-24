@@ -79,7 +79,7 @@
                 <input type="file" class="form-control" name="image">
             </label>
 
-            <img src="{{asset('images/' . $article->image)}}" alt="" class="w-25 h-100 rounded-circle shadow">
+            <img src="{{asset('storage/' . $article->image)}}" alt="" class="w-25 h-100 rounded-circle shadow">
 
         </div>
         <button class="btn btn-success"> تغییر</button>

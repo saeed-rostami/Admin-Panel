@@ -7,8 +7,7 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 
 class ArticleController extends Controller
@@ -31,8 +30,9 @@ class ArticleController extends Controller
         return view('Admin.Articles.singleArticle', compact('article'));
     }
 
-    public function create()
+    public function create(Article $article)
     {
+        $this->authorize('create' , $article);
         $categories = Category::all();
         $articles = Article::all();
         return view('Admin.Articles.create', compact('articles', 'categories'));
@@ -40,12 +40,14 @@ class ArticleController extends Controller
 
     public function edit(Article $article)
     {
+        $this->authorize('update' , $article);
         $categories = Category::all();
         return view('Admin.Articles.edit', compact('article', 'categories'));
     }
 
-    public function store(ArticleRequest $request)
+    public function store(ArticleRequest $request, Article $article)
     {
+        $this->authorize('create' , $article);
         $article = new Article();
         $article->title = $request->title;
         $article->brief = $request->brief;
@@ -56,29 +58,19 @@ class ArticleController extends Controller
         $article->category_id = $request->category_id;
         $article->published_at = $request->published_at;
 
-        $image = $request->file('image');
-        $title = $request->title;
-        $extension = $image->getClientOriginalExtension();
-        $fileName = $title . '.' . $extension;
-        $image->move("images/", $fileName);
-
-        $article->image = $fileName;
+        $article->image = $request->file('image')->store('images', 'public');
         $article->save();
-
-        $img = Image::make(public_path('/images/' . $fileName))->resize('525', '295');
-        $img->save();
 
         return redirect('articles');
     }
 
     public function update(ArticleRequest $request, Article $article)
     {
+        $this->authorize('update' , $article);
         if ($request->image == null) {
             $name = $article->image;
         } else {
-            $img = $request->file('image');
-            $name = $img->getClientOriginalName();
-            $img->move("images/", $name);
+            $name = $article->image = $request->file('image')->store('images', 'public');
         }
 
         $article->update([
@@ -94,16 +86,14 @@ class ArticleController extends Controller
         ]);
         $article->save();
 
-        $img = Image::make(public_path('/images/' . $name))->resize('525', '295');
-        $img->save();
         return redirect('articles');
 
     }
 
     public function destroy(Article $article)
     {
-        $file_img = public_path("/images/{$article->image}");
-        File::delete($file_img);
+        $this->authorize('delete' , $article);
+        Storage::delete($article->image);
         $article->delete();
         return back();
 

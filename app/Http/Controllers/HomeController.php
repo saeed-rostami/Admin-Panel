@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+
 class HomeController extends Controller
 {
     /**
@@ -25,6 +27,9 @@ class HomeController extends Controller
 
     public function admin()
     {
-        return view('Admin.index');
+        $publishedArticles = Article::query()->where('published_at', '<', now())->paginate(9);
+
+        $futureArticles = Article::query()->where('published_at', '>', now())->paginate(9);
+        return view('Admin.index', compact('publishedArticles', 'futureArticles'));
     }
 }

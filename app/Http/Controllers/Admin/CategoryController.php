@@ -17,11 +17,13 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        $this->authorize('update', $category);
         return view('Admin.Categories.edit', compact('category'));
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request, Category $category)
     {
+        $this->authorize('create', $category);
         Category::create([
             'title' => $request->title,
             'user_id' => auth()->user()->id,
@@ -31,18 +33,23 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
-       $category->update([
-          'title' => $request->title
-       ]);
-       $category->save();
+        $this->authorize('update', $category);
+        $category->update([
+            'title' => $request->title
+        ]);
+        $category->save();
         return redirect('categories');
 
     }
 
     public function destroy(Category $category)
     {
-       $category->delete();
-        return back();
+        if ($this->authorize('delete', $category)) {
+            $category->delete();
+            return back();
+        } else {
+            return back()->with('error', 'مجاز به اینکار نیستید');
+        }
 
     }
 }

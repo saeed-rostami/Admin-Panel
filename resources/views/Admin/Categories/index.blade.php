@@ -3,7 +3,7 @@
 @section('content')
     <div>
         <h1>ایجاد دسته بندی جدید</h1>
-        @hasanyrole('writer|admin')
+
         <form action="{{route('admin.category.store')}}" method="POST">
             @csrf
             <label>
@@ -11,13 +11,6 @@
             </label>
             <button class="btn btn-success"> ایجاد</button>
         </form>
-        @else
-
-               <strong class="text-danger">
-                   برای این بخش دسترسی ندارید
-               </strong>
-
-            @endrole
     </div>
 
     <div>
@@ -43,7 +36,6 @@
                     <td>{{$category->user->name}}</td>
 
 
-                    @role('admin')
                     <td>
                         <form action="{{route('admin.category.delete' , $category->id)}}" method="POST">
                             @csrf
@@ -53,29 +45,15 @@
                             </button>
                         </form>
                     </td>
-                    @else
-                        <td>
-                            <strong class="text-danger">
-                                برای این بخش دسترسی ندارید
-                            </strong>
-                        </td>
-                        @endrole
 
 
-                        @hasanyrole('writer|admin')
-                        <td>
-                            <a href="{{route('admin.category.edit' , $category->id)}}"
-                               class="btn
+                    <td>
+                        <a href="{{route('admin.category.edit' , $category->id)}}"
+                           class="btn
                 btn-outline-info mb-2"
-                            >ویرایش</a>
-                        </td>
-                        @else
-                            <td>
-                                <strong class="text-danger">
-                                    برای این بخش دسترسی ندارید
-                                </strong>
-                            </td>
-                            @endhasanyrole
+                        >ویرایش</a>
+                    </td>
+
 
                 </tr>
 
